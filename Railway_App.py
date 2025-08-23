@@ -5,6 +5,9 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
+
+
+
 st.set_page_config(page_title="Railway Dashboard" , layout='wide')
 
 # Loadind Cleaned Dataset.
@@ -152,22 +155,20 @@ with c6:
     st.pyplot(fig, transparent=True)
 
 with c7:
-    fig, ax = plt.subplots(facecolor="none")  # خلي الخلفية شفافة
+    fig, ax = plt.subplots(facecolor="none")  
     colors = plt.cm.Set3(range(len(ticket_type_counts)))
 
     ax.hist(filtered_df['Price'], bins=20, color="skyblue", edgecolor="white")
     ax.set_title(" Price Distribution", fontsize=14, fontweight="bold", color="white")
 
-    # خلي الخطوط والأرقام تظهر بلون أبيض عشان يبانوا في الدارك مود
     ax.tick_params(colors="white")
     ax.yaxis.label.set_color("white")
     ax.xaxis.label.set_color("white")
 
-    # خلي الـ spines (الإطار حوالين الرسم) أبيض برضو
     for spine in ax.spines.values():
         spine.set_color("white")
 
-    # شفافية الخلفية
+    
     fig.patch.set_alpha(0.0)
     ax.patch.set_alpha(0.0)
     ax.tick_params(colors="white")
@@ -180,7 +181,7 @@ with c8:
     fig, ax = plt.subplots()
     sns.boxplot(x='Ticket Type', y='Price', data=filtered_df, ax=ax , showfliers=False)
 
-    # تحسين الشكل لو دارك مود
+   
     ax.set_title(" Ticket Price Distribution", fontsize=14, fontweight="bold", color="white")
     ax.tick_params(colors="white")
     ax.yaxis.label.set_color("white")
@@ -193,7 +194,7 @@ with c8:
     st.pyplot(fig, transparent=True)
 
 with c9:
-    # تجميع البيانات بعدد العمليات
+   
     payment_method_with_purchase_type = (
         filtered_df.groupby(["Payment Method", "Purchase Type"]).size().reset_index(name="Count")
     )
@@ -216,11 +217,11 @@ c11, = st.columns(1)
 with c11:
     st.title("Top 5 Common Routes")
 
-    # حساب أكتر 5 Routes شيوعاً
+    # Top 5 Common Routes
     top_5_common_routes = filtered_df["Route"].value_counts().head(5).reset_index()
     top_5_common_routes.columns = ["Route", "Count"]
 
-    # رسم البار تشارت
+    
     fig, ax = plt.subplots(figsize=(8,6), facecolor="none")  # الخلفية None
 
     sns.barplot(
@@ -228,22 +229,25 @@ with c11:
         y="Route", 
         data=top_5_common_routes, 
         ax=ax, 
-        palette="Blues_r"   # تدريج ألوان أزرق
+        palette="Blues_r"   
     )
 
-    # تنسيقات إضافية
-    ax.set_xlabel("Counts", fontsize=12, color="white")   # خلي النص أبيض زي الباي
+   
+    ax.set_xlabel("Counts", fontsize=12, color="white")   
     ax.set_ylabel("Routes", fontsize=12, color="white")
     ax.set_title("Top 5 Common Routes", fontsize=14, weight="bold", color="white")
 
-    # خلي tick labels كمان أبيض
+    
     ax.tick_params(axis="x", colors="white")
     ax.tick_params(axis="y", colors="white")
 
-    # شفافية الخلفية
+   
     fig.patch.set_alpha(0.0)
     ax.patch.set_alpha(0.0)
 
     ax.tick_params(colors="white")
-    # عرض الرسم على Streamlit
+    
     st.pyplot(fig, transparent=True)
+
+st.sidebar.write("")
+st.sidebar.markdown("You can see my code on  [My Github](https://github.com/abdallahebrahim785/Railway_Dashboard)")
